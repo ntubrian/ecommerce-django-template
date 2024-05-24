@@ -1,0 +1,23 @@
+# docker-files/Dockerfile.frontend
+
+# 使用 node 18 作為基礎映像
+FROM node:18-alpine
+
+# 設置工作目錄
+WORKDIR /app
+
+# 複製 package.json 和 package-lock.json 並安裝依賴
+COPY ../frontend/package*.json ./
+RUN npm install
+
+# 複製其餘的應用程式碼
+COPY ../frontend/ ./
+
+# 開放端口
+EXPOSE 3000
+
+# 設置環境變量
+ENV HOST 0.0.0.0
+
+# 啟動應用，啟用熱加載
+CMD ["npm", "run", "dev"]
